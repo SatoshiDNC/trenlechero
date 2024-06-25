@@ -129,12 +129,14 @@
           console.log('response', response)
           const vapidPublicKey = await response.text()
           console.log('vapidPublicKey', vapidPublicKey)
-          const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey)
-          console.log('convertedVapidKey', convertedVapidKey)
-          registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: convertedVapidKey,
-          })
+          if (vapidPublicKey) {
+            const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey)
+            console.log('convertedVapidKey', convertedVapidKey)
+            registration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: convertedVapidKey,
+            })
+          }
         }).then((subscription) => {
           // subscription part
           fetch("./register", {
