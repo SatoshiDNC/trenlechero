@@ -125,7 +125,7 @@
             }
             return outputArray
           }
-          const response = await fetch("./vapidPublicKey")
+          const response = await fetch("./pub.pem")
           console.log('response', response)
           const vapidPublicKey = await response.text()
           console.log('vapidPublicKey', vapidPublicKey)
