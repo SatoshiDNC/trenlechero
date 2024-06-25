@@ -26,7 +26,7 @@ self.addEventListener('activate', (e) => {
     }),
   )
 })
-self.addEventListener("fetch", (e) => {
+self.addEventListener('fetch', (e) => {
   console.log('[Service Worker] fetch', e.request.url)
   e.respondWith(
     (async () => {
@@ -41,5 +41,14 @@ self.addEventListener("fetch", (e) => {
       cache.put(e.request, response.clone())
       return response
     })(),
+  )
+})
+self.addEventListener('push', (e) => {
+  console.log('[Service Worker] push')
+  const payload = e.data?.text() ?? 'no payload'
+  e.waitUntil(
+    self.registration.showNotification('ServiceWorker Cookbook', {
+      body: payload,
+    }),
   )
 })
