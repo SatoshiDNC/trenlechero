@@ -79,6 +79,36 @@
         vp.start(splash, true)
       })
 
+      const games = [{name:'Chess', author:'Cherry', slug:'app-screenshots/narrow1'}, {name:'Soccer', author:'Socrates', slug:'app-icon/512'}, {name:'Baseball', author:'Ben', slug:'app-screenshots/wide1'}]
+      const randomNotification = () => {
+        const randomItem = Math.floor(Math.random() * games.length)
+        const notifTitle = games[randomItem].name
+        const notifBody = `Created by ${games[randomItem].author}.`
+        const notifImg = `${games[randomItem].slug}.png`
+        const options = {
+          body: notifBody,
+          icon: notifImg,
+        }
+        console.log(notifTitle, JSON.stringify(options))
+        new Notification(notifTitle, options)
+        setTimeout(randomNotification, 30000)
+      }
+
+//      const button = document.getElementById("notifications")
+//      button.addEventListener("click", () => {
+        Notification.requestPermission().then((result) => {
+          console.log('notification permission', result)// default, granted, denied
+          if (result === 'granted') {
+            randomNotification()
+          }
+        })
+//      })
+
+      navigator.serviceWorker.register('js/service-worker.js').then((registration) => {
+        console.log('sw reg')
+        //return registration.pushManager.getSubscription().then(/* ... */)
+      })
+
       //window.nostr.getPublicKey().then(result => console.log(result))
     })
   </script>
