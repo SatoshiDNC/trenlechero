@@ -8,6 +8,12 @@
   <meta name="theme-color" content="#000000" />
   <!-- <script src="init.js" type="module" charset="utf-8"></script> -->
   <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
+  <script src='./lib/gl-matrix.js'></script>
+  <script src='./lib/fireglass.min.js'></script>
+  <script src='./lib/rune.min.js'></script>
+  <script src='./js/globals.js'></script>
+  <script src='./js/fonts/defaultFont.js'></script>
+  <script src='./js/splash.js'></script>
   <script type="importmap">
     { "imports": {
       "@getalby/sdk": "https://esm.sh/@getalby/sdk@3.5.1",
@@ -53,7 +59,27 @@
     })
 
     document.addEventListener("DOMContentLoaded", (event) => {
-      window.nostr.getPublicKey().then(result => console.log(result))
+
+      // Initialize globals
+      const canvas = document.querySelector('#app1')
+      vp.initialize(canvas)
+      gl = vp.getContext()
+      df.glSet(gl)
+
+      // Wait for fonts to load
+      const startupCheck = (f) => {
+        if (defaultFont.isReady()) {
+          defaultFont.init()
+          f()
+        } else {
+          setTimeout(startupCheck, 10)
+        }
+      }
+      startupCheck(() => {
+        vp.start(splash, true)
+      })
+
+      //window.nostr.getPublicKey().then(result => console.log(result))
     })
   </script>
   <span onclick="console.log('click');window.testPaymentModal()" style="cursor: pointer;">buy</span><br>
