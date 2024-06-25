@@ -126,8 +126,11 @@
             return outputArray
           }
           const response = await fetch("./vapidPublicKey")
+          console.log('response', response)
           const vapidPublicKey = await response.text()
+          console.log('vapidPublicKey', vapidPublicKey)
           const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey)
+          console.log('convertedVapidKey', convertedVapidKey)
           registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedVapidKey,
