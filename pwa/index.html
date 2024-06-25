@@ -136,6 +136,8 @@
               userVisibleOnly: true,
               applicationServerKey: convertedVapidKey,
             })
+          } else {
+            console.warn('no VAPID key: push notifications will not work')
           }
         }).then((subscription) => {
           // subscription part
